@@ -109,3 +109,15 @@ insterested in what cubical Agda is, read more
 All you need to know for the purposes of getting up and running with
 Ferros is that one must clone `agda/cubical`, and register it in
 `libraries` like we did with `Ferros` in the previous section.
+
+## Latex
+
+There exists files in the spec which are literate Agda files, in
+particular those that contain the types we wish to prove certain
+properties about. PDFs can be generated from those files by using the
+`latex` make directive:
+
+	$ make latex
+
+When this command completes, you will find PDFs which correspond to
+the Agda files in the `latex/` directory.
