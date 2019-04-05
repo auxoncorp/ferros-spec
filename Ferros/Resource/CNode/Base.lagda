@@ -112,7 +112,7 @@ explicit.
 Now we intend to prove that when we allocate a range from another that
 nothing is lost. This is done through a simple arithmetic proof which
 cancels the subtraction by adding the LHS operad back to the result
-which should be equal to the size of the initial range.
+which should be equal to the size of the initial range. 
 
 \begin{code}[hide]
 open _×_
@@ -124,5 +124,16 @@ alloc-retains : ∀ (x count : ℕ) →
                 (sr : SlotRange x) →
                 sr-size (fst (alloc sr count p)) + sr-size (snd (alloc sr count p)) ≡ x
 alloc-retains x count p _ = invert-ℕ-sub x count p
+\end{code}
+
+This of course implies, though the symmetric property of equality,
+that we can reconstruct a range through the sum of its parts.
+
+\begin{code}
+alloc-retains-reconstruct : ∀ (x count : ℕ) →
+                (p : count ≤ x) →
+                (sr : SlotRange x) →
+                x ≡ sr-size (fst (alloc sr count p)) + sr-size (snd (alloc sr count p))
+alloc-retains-reconstruct x count p sr = sym (alloc-retains x count p sr)
 \end{code}
 \end{document}
