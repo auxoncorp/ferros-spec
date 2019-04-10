@@ -104,7 +104,7 @@ alloc sr count _ =
 \AgdaFunction{alloc} requires a proof that the \texttt{count}, that is
 the size of the range which is to be allocated from the initial range,
 is less than or equal to that of the initial range. It is through this
-proof that we can guarantee that a range cannot be allocated. Also
+proof that we can guarantee that a range can be allocated. Also
 note that this proof, which would appear in Rust as a type bound, is
 implied by the definition of \texttt{Diff}, however in Agda we must be
 explicit.
