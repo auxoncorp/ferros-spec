@@ -3,7 +3,7 @@
 \usepackage{agdon}
 
 \hypersetup{
-            pdftitle={CNode Allocation}
+            pdftitle={CNode Allocation},
             pdfborder={0 0 0},
             breaklinks=true}
 
@@ -21,6 +21,7 @@
 module Ferros.Resource.CNode.Base where
 
 open import Data.Nat
+open import Data.Product
 open import Data.Nat.Properties
 open import Relation.Binary.PropositionalEquality
 open import Ferros.Prelude
@@ -114,15 +115,11 @@ nothing is lost. This is done through a simple arithmetic proof which
 cancels the subtraction by adding the LHS operad back to the result
 which should be equal to the size of the initial range. 
 
-\begin{code}[hide]
-open _×_
-\end{code}
-
 \begin{code}
 alloc-retains : ∀ (x count : ℕ) →
                 (p : count ≤ x) →
                 (sr : SlotRange x) →
-                sr-size (fst (alloc sr count p)) + sr-size (snd (alloc sr count p)) ≡ x
+                sr-size (proj₁ (alloc sr count p)) + sr-size (proj₂ (alloc sr count p)) ≡ x
 alloc-retains x count p _ = invert-ℕ-sub x count p
 \end{code}
 
@@ -133,7 +130,7 @@ that we can reconstruct a range through the sum of its parts.
 alloc-retains-reconstruct : ∀ (x count : ℕ) →
                 (p : count ≤ x) →
                 (sr : SlotRange x) →
-                x ≡ sr-size (fst (alloc sr count p)) + sr-size (snd (alloc sr count p))
+                x ≡ sr-size (proj₁ (alloc sr count p)) + sr-size (proj₂ (alloc sr count p))
 alloc-retains-reconstruct x count p sr = sym (alloc-retains x count p sr)
 \end{code}
 \end{document}

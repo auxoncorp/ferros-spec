@@ -7,12 +7,6 @@ open import Data.Nat
 open import Data.Nat.Properties
 open import Data.Bool
 
-record _×_ (A B : Set) : Set where
-  constructor _,_
-  field
-    fst : A
-    snd : B
-
 ℕ-sub : (x y : ℕ) → (y ≤ x) → ℕ
 ℕ-sub x .zero z≤n = x
 ℕ-sub ._ ._ (s≤s p) = ℕ-sub _ _ p
