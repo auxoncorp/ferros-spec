@@ -1,0 +1,132 @@
+* Ferros Specifications
+
+A repository containing specifications and proofs about Ferros.
+
+** Installation
+
+/NB: The author assumes you're using Emacs to hack on Agda things./
+
+While what it means to "install" ferros-spec is ambiguous, to /use/
+it—that is, to open it and make C-c C-l happy—you'll first need a
+functional installation of Agda.
+
+*** Installing Agda
+
+1. Install [[https://docs.haskellstack.org/en/stable/README/][Stack]].
+
+   #+BEGIN_SRC sh
+   $ curl -sSL https://get.haskellstack.org/ | sh
+   #+END_SRC
+
+2. Clone the Agda source.
+
+   #+BEGIN_SRC sh
+   $ git clone git@github.com:agda/agda.git
+   #+END_SRC
+
+3. Use Stack to build and install Agda.
+
+   #+BEGIN_SRC sh
+   $ cd agda
+   $ stack --stack-yaml stack-8.6.4.yaml install
+   #+END_SRC
+
+4. You should see a few lines stating that two binaries were installed
+   ~agda~ and ~agda-mode~. ~agda-mode~ is the Emacs integration. To
+   hook Agda up to Emacs, run that command and tell it to set itself
+   up.
+
+   #+BEGIN_SRC sh
+   $ agda-mode setup
+   #+END_SRC
+
+   If this is not your first go around with an Agda installation, use
+   compile rather than setup. This does the elisp complilation with
+   the fresh source code, but doesn't touch your init.el file again.
+
+   /NB: It *will not* work if you've already run setup to do it again
+   after an update. The first thing that setup does is check your
+   init.el file for the presence of an Agda config. If it's already
+   there, it does nothing./
+
+*** Configuring Agda
+
+Agda's "library system" is... weird, in that it doesn't really have
+one. What it /does/ have, is a collection of text files which help the
+compiler find the right source files. Here's what you need.
+
+**** ~$AGDA_DIR~
+
+By default, it's ~/.agda:
+
+#+BEGIN_QUOTE
+The AGDA_DIR defaults to ~/.agda on unix-like systems[.]
+#+END_QUOTE
+
+[[https://agda.readthedocs.io/en/latest/tools/package-system.html][ /The Agda docs/ ]]
+
+Just leave it there. Don't rock the boat. I'm fairly sure that this
+one in particular /will/ capsize.
+
+~$AGDA_DIR~ should contain the following files:
+
+#+BEGIN_SRC sh
+$ tree ~/.agda
+/home/dpitt/.agda
+├── defaults
+└── libraries
+#+END_SRC
+
+**** 2. Libraries
+
+~libraries~ /registers/ Agda libraries through a path to an Agda library
+file. Ferros has a library file called ferros.agda-lib which you can
+take a look at if you'd like an example, or you can read more [[https://agda.readthedocs.io/en/latest/tools/package-system.html][here]].
+
+Inside ~libraries~ you should add a path to Ferros's library file:
+
+#+BEGIN_SRC sh
+$ cat ~/.agda/libraries
+/home/dpitt/src/ferros-spec/ferros.agda-lib
+#+END_SRC
+
+**** 3. Defaults
+
+~defaults~ contains registered library names which you would like to
+be loaded *any* time you open an Agda file. Let's get setup with the
+Agda std-lib for an example.
+
+- Clone agda-stdlib. I'm keeping the standard library in my ~/.agda folder.
+
+  #+BEGIN_SRC sh
+  $ git clone git@github.com:agda/agda-stdlib.git ~/.agda/agda-stdlib
+  #+END_SRC
+
+- Register it in libraries.
+
+  #+BEGIN_SRC sh
+  $ echo "/home/dpitt/.agda/agda-stdlib/standard-library.agda-lib" >> ~/.agda/libraries
+  #+END_SRC
+
+- Include it in defaults.
+
+  #+BEGIN_SRC sh
+  $ echo standard-library >> ~/.agda/defaults
+  #+END_SRC
+
+Now modules from the standard library can be imported any time you
+open an Agda file.
+
+** Latex
+
+There exists files in the spec which are literate Agda files, in
+particular those that contain the types we wish to prove certain
+properties about. PDFs can be generated from those files by using the
+latex make directive:
+
+#+BEGIN_SRC sh
+$ make latex
+#+END_SRC
+
+When this command completes, you will find PDFs which correspond to
+the Agda files in the ~latex~ directory.
