@@ -5,7 +5,7 @@ module Ferros.Prelude where
 open import Relation.Binary.PropositionalEquality
 open import Data.Nat
 open import Data.Nat.Properties
-open import Data.Bool
+open import Data.Bool hiding (_≤_)
 
 ℕ-sub : (x y : ℕ) → (y ≤ x) → ℕ
 ℕ-sub x .zero z≤n = x

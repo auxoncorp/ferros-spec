@@ -14,10 +14,10 @@ latex-cnode:
 	agda --latex Ferros/Resource/CNode/Base.lagda
 	cd latex && \
 	  	pdflatex --shell-escape Ferros/Resource/CNode/Base.tex
-	mv latex/Base.pdf latex/cnode-allocation.pdf
+	mv latex/Base.pdf pdf/cnode-allocation.pdf
 
 latex-ut:
 	agda --latex Ferros/Resource/Untyped/Base.lagda
 	cd latex && \
 	  	pdflatex --shell-escape Ferros/Resource/Untyped/Base.tex
-	mv latex/Base.pdf latex/untyped-allocation.pdf
+	mv latex/Base.pdf pdf/untyped-allocation.pdf
