@@ -134,7 +134,7 @@ $ make latex
 #+END_SRC
 
 When this command completes, you will find PDFs which correspond to
-the Agda files in the ~latex~ directory.
+those Agda files in the ~pdf~ directory.
 
 ** License
 See LICENSE for more details.
